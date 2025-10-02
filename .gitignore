@@ -1,0 +1,30 @@
+# Dependencies
+**/node_modules/
+
+# Build artifacts
+**/dist/
+**/build/
+**/.next/
+**/out/
+
+# Hardhat/Foundry/Cache
+fhevm-hardhat/cache/
+fhevm-hardhat/artifacts/build-info/*.json
+!fhevm-hardhat/artifacts/contracts/**
+!fhevm-hardhat/artifacts/@openzeppelin/**
+!fhevm-hardhat/artifacts/@fhevm/**
+
+# Logs
+**/*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Env
+**/.env
+**/.env.local
