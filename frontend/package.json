@@ -1,0 +1,27 @@
+{
+  "name": "greenproof-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "dev": "next dev -p 5173",
+    "build": "next build",
+    "start": "next start -p 5173",
+    "genabi": "node ./scripts/genabi.mjs"
+  },
+  "dependencies": {
+    "@fhevm/mock-utils": "^0.1.0",
+    "@zama-fhe/relayer-sdk": "^0.2.0",
+    "ethers": "^6.13.2",
+    "next": "^15.0.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.2",
+    "typescript": "^5.6.3",
+    "tailwindcss": "^3.4.1",
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.35"
+  }
+}
