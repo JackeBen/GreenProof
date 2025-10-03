@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-green-50 via-blue-50 to-green-100 min-h-screen;
+  }
+}
+
+@layer utilities {
+  .leaf-particle {
+    animation: leafFall 8s linear infinite;
+  }
+
+  @keyframes leafFall {
+    0% {
+      transform: translateY(-100vh) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(100vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+}
+
+
+
