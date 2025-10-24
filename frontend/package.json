@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev -p 5173",
     "build": "next build",
+    "export": "GITHUB_PAGES=true next export",
     "start": "next start -p 5173",
     "genabi": "node ./scripts/genabi.mjs"
   },
