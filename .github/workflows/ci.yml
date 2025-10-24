@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install deps (frontend)
+        working-directory: frontend
+        run: npm ci || npm i --no-audit --no-fund
+      - name: Typecheck (frontend)
+        working-directory: frontend
+        run: npx tsc -noEmit
+      - name: Install deps (hardhat)
+        working-directory: fhevm-hardhat
+        run: npm ci || npm i --no-audit --no-fund
+      - name: Compile contracts
+        working-directory: fhevm-hardhat
+        run: npx hardhat compile --no-compile
