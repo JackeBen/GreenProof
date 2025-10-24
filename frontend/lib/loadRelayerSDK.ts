@@ -34,7 +34,11 @@ export async function loadRelayerSDKUmd(): Promise<RelayerSDKUmd> {
     document.head.appendChild(s);
   });
 
-  return window.relayerSDK as RelayerSDKUmd;
+  const sdk = window.relayerSDK;
+  if (!sdk) {
+    throw new Error("relayerSDK UMD not available after load");
+  }
+  return sdk as RelayerSDKUmd;
 }
 
 

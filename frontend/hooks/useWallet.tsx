@@ -11,14 +11,15 @@ export function useWallet() {
   const [isConnected, setIsConnected] = useState(false);
 
   const connect = async () => {
-    if (typeof window.ethereum === "undefined") {
+    const ethereum = typeof window !== "undefined" ? window.ethereum : undefined;
+    if (!ethereum) {
       alert("请安装 MetaMask");
       return;
     }
 
     try {
-      const ethProvider = new BrowserProvider(window.ethereum);
-      await window.ethereum.request({ method: "eth_requestAccounts" });
+      const ethProvider = new BrowserProvider(ethereum);
+      await ethereum.request?.({ method: "eth_requestAccounts" });
       const ethSigner = await ethProvider.getSigner();
       const ethAddress = await ethSigner.getAddress();
       const network = await ethProvider.getNetwork();
@@ -34,17 +35,18 @@ export function useWallet() {
   };
 
   useEffect(() => {
-    if (typeof window.ethereum === "undefined") return;
+    const ethereum = typeof window !== "undefined" ? window.ethereum : undefined;
+    if (!ethereum) return;
 
-    const ethProvider = new BrowserProvider(window.ethereum);
+    const ethProvider = new BrowserProvider(ethereum);
     setProvider(ethProvider);
 
     // 冷启动静默连接（如果已授权）
     (async () => {
       try {
-        const accounts: string[] = await window.ethereum.request({ method: "eth_accounts" });
-        const chainHex: string = await window.ethereum.request({ method: "eth_chainId" });
-        const currentChainId = parseInt(chainHex, 16);
+        const accounts: string[] = await ethereum.request?.({ method: "eth_accounts" });
+        const chainHex: string = await ethereum.request?.({ method: "eth_chainId" });
+        const currentChainId = chainHex ? parseInt(chainHex, 16) : NaN;
         setChainId(currentChainId);
         if (accounts && accounts.length > 0) {
           const ethSigner = await ethProvider.getSigner();
@@ -73,28 +75,29 @@ export function useWallet() {
     const onChain = (hexId: string) => {
       try { setChainId(parseInt(hexId, 16)); } catch { setChainId(null); }
     };
-    window.ethereum.on("accountsChanged", onAccounts);
-    window.ethereum.on("chainChanged", onChain);
+    ethereum?.on?.("accountsChanged", onAccounts);
+    ethereum?.on?.("chainChanged", onChain);
 
     return () => {
       try {
-        window.ethereum.removeListener("accountsChanged", onAccounts);
-        window.ethereum.removeListener("chainChanged", onChain);
+        ethereum?.removeListener?.("accountsChanged", onAccounts);
+        ethereum?.removeListener?.("chainChanged", onChain);
       } catch (_) {}
     };
   }, []);
 
   const switchToSepolia = async () => {
-    if (typeof window.ethereum === "undefined") return;
+    const ethereum = typeof window !== "undefined" ? window.ethereum : undefined;
+    if (!ethereum) return;
     try {
-      await window.ethereum.request({
+      await ethereum.request?.({
         method: "wallet_switchEthereumChain",
         params: [{ chainId: "0xaa36a7" }], // 11155111
       });
     } catch (switchError: any) {
       if (switchError?.code === 4902 || switchError?.message?.includes("Unrecognized chain ID")) {
         try {
-          await window.ethereum.request({
+          await ethereum.request?.({
             method: "wallet_addEthereumChain",
             params: [
               {
