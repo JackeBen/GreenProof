@@ -24,7 +24,7 @@ export async function loadRelayerSDKUmd(): Promise<RelayerSDKUmd> {
     s.async = true;
     s.type = "text/javascript";
     s.onload = () => {
-      if (!window.relayerSDK) {
+      if (!window.relayerSDK || typeof window.relayerSDK.createInstance !== "function") {
         reject(new Error("relayerSDK UMD not available"));
         return;
       }
