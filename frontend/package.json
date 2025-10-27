@@ -5,8 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "next dev -p 5173",
-    "build": "next build",
-    "export": "GITHUB_PAGES=true next export",
+    "build": "GITHUB_PAGES=true next build",
     "start": "next start -p 5173",
     "genabi": "node ./scripts/genabi.mjs"
   },
